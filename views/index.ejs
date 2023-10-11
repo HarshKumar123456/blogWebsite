@@ -1,3 +1,17 @@
 <%- include("partials/header.ejs") %>
+
 <h1>Track your days</h1>
+
+<h2> <%= typeOfBlogs %> </h2>
+
+<div class="container blog-container-flexbox">
+    <% blogs.forEach(blog => { %>
+        <div class="container blog-container-flexbox-items" id="<%= blog._id %>">
+            <h3><%= blog.title %></h3>
+            <p><%= blog.content %></p>
+        </div>
+    <%}); %>
+</div>
+
+
 <%- include("partials/footer.ejs") %>

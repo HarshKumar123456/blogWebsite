@@ -65,18 +65,42 @@ async function findCollegeBlogs() {
     return blogs;
   }
 
+  const blogList = [
+    {
+        _id: 1,
+        title: "First school blog",
+        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah"
+    },
+    {
+        _id: 2,
+        title: "Second school blog",
+        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah"
+    },
+    {
+        _id: 3,
+        title: "Third school blog",
+        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah"
+    },
+    {
+        _id: 4,
+        title: "Fourth school blog",
+        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah"
+    },
+  ];
 
 
 app.get("/" , (req,res) => {
-
+    const type = "Home";
     res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
 app.get("/school" , (req,res) => {
+    const type = "School";
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
 app.get("/college" , (req,res) => {
+    const type = "College";
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 

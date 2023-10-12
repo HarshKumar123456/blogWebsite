@@ -104,6 +104,10 @@ app.get("/college" , (req,res) => {
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
+app.get("/newBlog", (req,res) => {
+    res.render("newBlog.ejs");
+});
+
 app.listen(port,()=>{
     console.log(`Server is listening on port: ${port}`);
 });

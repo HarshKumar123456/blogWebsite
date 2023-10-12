@@ -1,0 +1,16 @@
+<%- include("partials/header.ejs") %>
+
+<h1>Track your days....</h1>
+
+
+    <form action="/addBlog" method="POST" class="form-container">
+        <input type="text" id="blogTitle" name="blogTitle"  placeholder="Enter title here">
+        <textarea name="blogContent" id="blogContent" cols="30" rows="10" placeholder="Save your memories...."></textarea>
+        <div class="button-container">
+            <button type="submit" class="btn btn-outline-success">Save</button>
+            <a href="/" class="cancel-blog-creation btn btn-outline-danger">Cancel</a>
+        </div>
+    </form>
+
+
+<%- include("partials/footer.ejs") %>

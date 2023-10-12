@@ -26,3 +26,18 @@
 .blog-container-flexbox-items>h3 {
     font-size: 2.5rem;
 }
+
+.cancel-blog-creation{
+    text-decoration: none;
+}
+
+.form-container{
+    display: grid;
+    gap: 2rem;
+}
+
+.button-container{
+    display: flex;
+    gap: 1rem;
+    width: 4rem;
+}

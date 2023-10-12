@@ -114,9 +114,29 @@ app.post("/addBlog",async (req,res) => {
     res.render("index.ejs",{typeOfBlogs: blogType,blogs: blogList});
 });
 
-app.get("/detailedBlog" , async (req,res) => {
+app.post("/detailedBlog" , async (req,res) => {
     console.log(req.body);
+
+    const blogType = req.body.blogType;
+    const blogId = req.body.blogId;
+
+    var blogObject = {};
+
+    if(blogType === "College"){
+        blogObject = await collegeBlogModel.findOne({_id: blogId});
+    }
+    else{
+        blogObject = await schoolBlogModel.findOne({_id: blogId});
+    }
+
+    console.log("Printing object\n");
+    console.log(blogObject);
     
+    blogObject._id = blogId;
+    blogObject.type = blogType;
+
+    res.render("detailedBlog.ejs" , {blog: blogObject});
+
 });
 
 app.listen(port,()=>{

@@ -1,0 +1,14 @@
+<%- include("partials/header.ejs") %>
+
+<h2 class="blog-type"> <%= blog.type %> </h2>
+
+<div class="container blog-container-flexbox">
+    
+        <div class="container blog-container-flexbox-items" id="<%= blog._id %>">
+            <h3><%= blog.title %></h3>
+            <p><%= blog.content %></p>
+        </div>
+    
+</div>
+
+<%- include("partials/footer.ejs") %>

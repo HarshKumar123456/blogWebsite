@@ -18,7 +18,7 @@
         <div class="container blog-container-flexbox-items" id="<%= blog._id %>">
             <h3><%= blog.title %></h3>
             <p><%= blog.content.slice(0,200) %></p>
-            <form action="/detailedBlog" method="get">
+            <form action="/detailedBlog" method="post">
                 <input type="hidden" name="blogType" value="<%= typeOfBlogs %>">
                 <input type="hidden" name="blogId" value="<%= blog._id %>">
                 <button type="submit" class="btn btn-outline-success"> Details </button>

@@ -12,6 +12,8 @@ async function connectToDatabase() {
   await mongoose.connect('mongodb://127.0.0.1:27017/blogWebsiteDB');
 }
 
+await connectToDatabase();
+
 const schoolBlogSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -65,47 +67,56 @@ async function findCollegeBlogs() {
     return blogs;
   }
 
-  const blogList = [
-    {
-        _id: 1,
-        title: "First school blog",
-        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik HahahaahhahahahahThis is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah "
-    },
-    {
-        _id: 2,
-        title: "Second school blog",
-        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik HahahaahhahahahahThis is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah "
-    },
-    {
-        _id: 3,
-        title: "Third school blog",
-        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik HahahaahhahahahahThis is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah "
-    },
-    {
-        _id: 4,
-        title: "Fourth school blog",
-        content: "This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik HahahaahhahahahahThis is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah This is just for fun. Alright OK Ekdam thik Hahahaahhahahahah "
-    },
-  ];
+  var blogList = [];
 
 
-app.get("/" , (req,res) => {
+app.get("/" , async (req,res) => {
     const type = "Home";
+    blogList = await findCollegeBlogs();
     res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
-app.get("/school" , (req,res) => {
+app.get("/school" , async (req,res) => {
     const type = "School";
+    blogList = await findSchoolBlogs();
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
-app.get("/college" , (req,res) => {
+app.get("/college" , async (req,res) => {
     const type = "College";
+    blogList = await findCollegeBlogs();
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
-app.get("/newBlog", (req,res) => {
-    res.render("newBlog.ejs");
+app.post("/newBlog", (req,res) => {
+    console.log(req.body);
+    const blogType = req.body.blogType;
+    res.render("newBlog.ejs",{typeOfBlog: blogType});
+});
+
+app.post("/addBlog",async (req,res) => {
+    console.log(req.body);
+    const blogType = req.body.blogType;
+    const blogTitle = req.body.blogTitle;
+    const blogContent = req.body.blogContent;
+
+    if(blogType === "College"){
+        
+        await createNewCollegeBlog(blogTitle,blogContent);
+        blogList = await findCollegeBlogs();
+    }
+    else{
+   
+        await createNewSchoolBlog(blogTitle,blogContent);
+        blogList = await findSchoolBlogs();
+    }
+    
+    res.render("index.ejs",{typeOfBlogs: blogType,blogs: blogList});
+});
+
+app.get("/detailedBlog" , async (req,res) => {
+    console.log(req.body);
+    
 });
 
 app.listen(port,()=>{

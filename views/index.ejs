@@ -2,19 +2,32 @@
 
 <div class="heading">
     <h1>Track your days....</h1>
-    <a href="/newBlog" class="btn btn-outline-success"> Create </a>
+    <form action="/newBlog" method="post">
+        <input type="hidden" name="blogType" value="<%= typeOfBlogs %>">
+        <button type="submit" class="btn btn-outline-success"> Create </button>
+    </form>
 </div>
 
 <h2 class="blog-type"> <%= typeOfBlogs %> </h2>
+<% console.log(blogs); %>
+
+<% if(locals.blogs.length !== 0){ %>
 
 <div class="container blog-container-flexbox">
     <% blogs.forEach(blog => { %>
         <div class="container blog-container-flexbox-items" id="<%= blog._id %>">
             <h3><%= blog.title %></h3>
-            <p><%= blog.content %></p>
+            <p><%= blog.content.slice(0,200) %></p>
+            <form action="/detailedBlog" method="get">
+                <input type="hidden" name="blogType" value="<%= typeOfBlogs %>">
+                <input type="hidden" name="blogId" value="<%= blog._id %>">
+                <button type="submit" class="btn btn-outline-success"> Details </button>
+            </form>
         </div>
     <%}); %>
 </div>
+
+<% } %>
 
 
 <%- include("partials/footer.ejs") %>

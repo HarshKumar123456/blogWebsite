@@ -4,6 +4,7 @@
 
 
     <form action="/addBlog" method="POST" class="form-container">
+        <input type="hidden" name="blogType" value="<%= typeOfBlog %>">
         <input type="text" id="blogTitle" name="blogTitle"  placeholder="Enter title here">
         <textarea name="blogContent" id="blogContent" cols="30" rows="10" placeholder="Save your memories...."></textarea>
         <div class="button-container">

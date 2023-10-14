@@ -1,6 +1,18 @@
 <%- include("partials/header.ejs") %>
 
-<h2 class="blog-type"> <%= blog.type %> </h2>
+<div class="options-to-do-with-blog">
+    <h2 class="blog-type"> <%= blog.type %> </h2>
+    <form action="/actions" method="post">
+        <input type="hidden" name="blogType" value="<%= blog.type %>">
+        <input type="hidden" name="blogId" value="<%= blog._id %>">
+        <input type="hidden" name="blogTitle" value="<%= blog.title %>">
+        <input type="hidden" name="blogContent" value="<%= blog.content %>">
+        <div class="option-buttons">
+            <button type="submit" class="btn btn-outline-primary" name="action" value="edit"> Edit </button>
+            <button type="submit" class="btn btn-outline-danger" name="action" value="delete"> Delete </button>
+        </div>
+    </form>
+</div>
 
 <div class="container blog-container-flexbox">
     

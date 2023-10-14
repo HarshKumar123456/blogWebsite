@@ -41,3 +41,9 @@
     gap: 1rem;
     width: 4rem;
 }
+
+.options-to-do-with-blog{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}

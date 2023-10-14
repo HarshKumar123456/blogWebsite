@@ -71,18 +71,18 @@ async function findCollegeBlogs() {
 
 
 app.get("/" , async (req,res) => {
-    const type = "Home";
+    const type = "College";
     blogList = await findCollegeBlogs();
     res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
-app.get("/school" , async (req,res) => {
+app.get("/School" , async (req,res) => {
     const type = "School";
     blogList = await findSchoolBlogs();
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
 });
 
-app.get("/college" , async (req,res) => {
+app.get("/College" , async (req,res) => {
     const type = "College";
     blogList = await findCollegeBlogs();
      res.render("index.ejs",{typeOfBlogs: type,blogs: blogList});
@@ -138,6 +138,67 @@ app.post("/detailedBlog" , async (req,res) => {
     res.render("detailedBlog.ejs" , {blog: blogObject});
 
 });
+
+app.post("/actions" , async (req,res) => {
+    const action = req.body.action;
+
+    const blogToUpdate = {
+            _id: req.body.blogId,
+            type: req.body.blogType,
+            title: req.body.blogTitle,
+            content: req.body.blogContent
+    };
+
+    if (action === "edit") {
+        res.render("edit.ejs", {blog: blogToUpdate});
+    }
+    else if(action === "delete"){
+        if(req.body.blogType === "College"){
+            await collegeBlogModel.findByIdAndDelete({_id: req.body.blogId});
+        }
+        else{
+            await schoolBlogModel.findByIdAndDelete({_id: req.body.blogId});
+        }
+
+        res.render("delete.ejs");
+    }
+    else{
+        console.log(action);
+        res.sendStatus(404);
+    }
+});
+
+
+app.post("/updateBlog",async (req,res) => {
+    // console.log(req.body);
+
+    const blogId = req.body.blogId;
+    const blogType = req.body.blogType;
+    const blogTitle = req.body.blogTitle;
+    const blogContent = req.body.blogContent;
+
+    var blogObject = {
+        title: blogTitle,
+        content: blogContent
+    };
+
+    if(blogType === "College"){
+        await collegeBlogModel.findByIdAndUpdate({_id: blogId}, { $set: blogObject});
+        blogObject = await collegeBlogModel.findById({_id: blogId});
+    }
+    else{
+       await schoolBlogModel.findByIdAndUpdate({_id: blogId}, { $set: blogObject});
+       blogObject = await schoolBlogModel.findById({_id: blogId});
+    }
+
+    blogObject.type = blogType;
+    
+    console.log("after updation ");
+    console.log(blogObject);
+    res.render("detailedBlog.ejs" , {blog: blogObject});
+});
+
+
 
 app.listen(port,()=>{
     console.log(`Server is listening on port: ${port}`);

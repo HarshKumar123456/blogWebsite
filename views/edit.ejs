@@ -1,0 +1,19 @@
+<%- include("partials/header.ejs") %>
+
+<h1>Track your days....</h1>
+
+
+    <form action="/updateBlog" method="post" class="form-container">
+
+        <input type="hidden" name="blogType" value="<%= blog.type %>">
+        <input type="hidden" name="blogId" value="<%= blog._id %>">
+        <input type="text" id="blogTitle" name="blogTitle"  value="<%= blog.title %>">
+        <textarea name="blogContent" id="blogContent" cols="30" rows="10" ><%= blog.content %></textarea>
+        
+        <div class="button-container">
+            <button type="submit" class="btn btn-outline-success">Save</button>
+            <a href="/<%= blog.type %>" class="cancel-blog-creation btn btn-outline-danger">Cancel</a>
+        </div>
+    </form>
+
+<%- include("partials/footer.ejs") %>

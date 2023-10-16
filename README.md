@@ -25,6 +25,10 @@ cd project
 git clone https://github.com/HarshKumar123456/blogWebsite.git
 
 ```
+**Now go inside folder "blogWebsite" by running**
+```
+cd blogWebsite
+```
 **This will Install all the required node mondules to run this website**
 ```
 npm i
